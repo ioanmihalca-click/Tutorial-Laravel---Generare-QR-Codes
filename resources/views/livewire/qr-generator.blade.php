@@ -1,6 +1,6 @@
 <div>
     <!-- Formular -->
-    <div class="mb-8">
+    <div class="mx-auto my-8 max-w-7xl">
         <form wire:submit.prevent="generate">
             <div class="mb-4">
                 <label for="url" class="block text-sm font-medium text-gray-700">URL</label>
@@ -25,7 +25,7 @@
     </div>
 
     <!-- Lista QR Codes -->
-    <div class="mt-8">
+    <div class="mx-auto mt-8 max-w-7xl">
         <h2 class="mb-4 text-lg font-semibold">QR Codes Generate</h2>
         
         <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">

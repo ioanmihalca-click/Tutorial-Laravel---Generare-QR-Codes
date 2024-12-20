@@ -11,22 +11,11 @@ class QrGenerator extends Component
 {
     public $url = '';
     public $title = '';
-    
+
     protected $rules = [
         'url' => 'required|url',
         'title' => 'nullable|string|max:255'
     ];
-
-    public function mount($identifier = null)
-    {
-        if ($identifier) {
-           $qrCode = QrCode::where('identifier', $identifier)->firstofFail();
-           $qrCode->scans()->create();
-           $qrCode->incrementScans();
-        
-        }
-    }
-
 
 
     public function generate()
@@ -39,23 +28,23 @@ class QrGenerator extends Component
             'title' => $this->title
         ]);
 
-        // Generare imagine QR
+        // Folosim app()->make pentru a genera URL-ul corect de tracking
+        $trackingUrl = app()->make('url')->to("/r/{$qrCode->identifier}");
+
+        // Generăm QR code-ul cu URL-ul de tracking
         $generatedQr = QrCodeGenerator::size(300)
             ->format('svg')
             ->style('round')
             ->eye('circle')
             ->errorCorrection('H')
-            ->generate($qrCode->tracking_url);
+            ->generate($trackingUrl);
 
-        // Salvare imagine
         Storage::disk('public')->put(
             "qrcodes/{$qrCode->identifier}.svg",
             $generatedQr
         );
 
-        // Reset form
         $this->reset(['url', 'title']);
-        
         session()->flash('success', 'QR Code generat cu succes!');
     }
 

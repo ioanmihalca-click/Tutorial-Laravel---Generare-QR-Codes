@@ -40,6 +40,6 @@ class QrCode extends Model
     //helper pentru url-ul de tracking
     public function getTrackingUrlAttribute()
     {
-        return route('qr.redirect'. $this->identifier);
+        return route('qr.redirect', ['identifier' => $this->identifier]);
     }
 }
