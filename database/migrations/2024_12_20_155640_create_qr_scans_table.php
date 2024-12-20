@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('qr_scans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('qr_code_id')->constrained()->onDelete('cascade');
-            $table->timestamps('scanned_at');
+            $table->timestamp('scanned_at')->nullable();
+            $table->timestamps();
         });
     }
 
